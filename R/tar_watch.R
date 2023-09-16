@@ -210,7 +210,7 @@ tar_watch_app_ui <- function(
   displays
 ) {
   body <- bs4Dash::bs4DashBody(
-    shinybusy::add_busy_spinner(position = "top-left"),
+    shinybusy::add_busy_bar(color = "red", height = "8px"),
     tar_watch_ui(
       id = "tar_watch_id",
       label = "tar_watch_label",
@@ -230,7 +230,9 @@ tar_watch_app_ui <- function(
     )
   )
   bs4Dash::bs4DashPage(
+    #help switch not used remove radio
     title = "",
+    help = NULL,
     body = body,
     header = bs4Dash::bs4DashNavbar(controlbarIcon = NULL),
     sidebar = bs4Dash::bs4DashSidebar(disable = TRUE),
