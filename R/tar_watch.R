@@ -234,7 +234,9 @@ tar_watch_app_ui <- function(
     title = "",
     help = NULL,
     body = body,
-    header = bs4Dash::bs4DashNavbar(controlbarIcon = NULL),
+    header = bs4Dash::bs4DashNavbar(
+      status = 'primary',
+      controlbarIcon = NULL),
     sidebar = bs4Dash::bs4DashSidebar(disable = TRUE),
     dark = FALSE
   )
