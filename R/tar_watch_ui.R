@@ -175,14 +175,53 @@ tar_watch_ui <- function(
       # expand here 
       shiny.router::router_ui(
         shiny.router::route("summary",
-                            gt::gt_output(ns("summary"))),
-        shiny.router::route("branches", gt::gt_output(ns("branches"))),
-        shiny.router::route("progress", DT::dataTableOutput(ns("progress"))),
-        shiny.router::route("graph", visNetwork::visNetworkOutput(
+                            bs4Dash::bs4Card(
+                              title = "Summary View",
+                              status = "secondary",
+                              closable = FALSE,
+                              collapsible = FALSE,
+                              solidHeader = TRUE,
+                              width = 12,
+                              gt::gt_output(ns("summary")))),
+        shiny.router::route("branches",
+                            bs4Dash::bs4Card(
+                              title = "Branches View",
+                              status = "secondary",
+                              closable = FALSE,
+                              collapsible = FALSE,
+                              solidHeader = TRUE,
+                              width = 12,
+                              gt::gt_output(ns("branches")))),
+        shiny.router::route("progress",
+                            bs4Dash::bs4Card(
+                              title = "Progress View",
+                              status = "secondary",
+                              closable = FALSE,
+                              collapsible = FALSE,
+                              solidHeader = TRUE,
+                              width = 12,
+                              DT::dataTableOutput(ns("progress")))),
+        shiny.router::route("graph",
+                            bs4Dash::bs4Card(
+                              title = "Graph View",
+                              status = "secondary",
+                              closable = FALSE,
+                              collapsible = FALSE,
+                              solidHeader = TRUE,
+                              width = 12,
+                              visNetwork::visNetworkOutput(
                 ns("graph"),
                 height = height
-              )),
-        shiny.router::route("about", tar_watch_about())
+              ))),
+        shiny.router::route("about",
+                            bs4Dash::bs4Card(
+                              title = "About the Tar Watch App",
+                              status = "secondary",
+                              closable = FALSE,
+                              collapsible = FALSE,
+                              solidHeader = TRUE,
+                              width = 12,
+                              tar_watch_about()))
       )
      # shiny::uiOutput(ns("display"))
     )
