@@ -40,7 +40,7 @@ tar_watch_ui <- function(
   degree_to = 1L,
   height = "650px",
   display = "summary",
-  displays = c("summary", "branches", "progress", "graph", "about")
+  displays = tar_display_controllers()
 ) {
   tar_assert_allow_meta("tar_watch_ui")
   tar_assert_watch_packages()
@@ -200,6 +200,7 @@ tar_watch_ui <- function(
                             bs4Dash::bs4Card(
                               title = "Graph View",
                               status = "primary",
+                              maximizable = TRUE,
                               closable = FALSE,
                               collapsible = FALSE,
                               solidHeader = TRUE,
@@ -232,4 +233,19 @@ tar_watch_about <- function() {
   )
   # to contain it inside a shinytag or else it spills over
   shiny::includeMarkdown(path)
+}
+
+
+#docs
+# this doesnt stop view from being created
+# remove branches option if not relevant to pipeline
+tar_display_controllers <- function(){
+  
+  if(nrow(tar_progress_branches()) > 1){
+    display_options <- c("summary", "branches", "progress", "graph", "about")
+  }else{
+    display_options <- c("summary", "progress", "graph", "about")
+  }
+  
+  return(display_options)
 }

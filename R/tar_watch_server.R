@@ -93,7 +93,13 @@ tar_watch_server <- function(
         )
       }, height = height)
       output$branches <- gt::render_gt({
-        shiny::req(refresh$refresh)
+        # if no data for branches dont render this component
+        if(nrow(tar_progress_branches()) == 0){
+          shiny::req(FALSE)
+        }else{
+          # only link reactive chain if there is data for those branches
+          shiny::req(refresh$refresh)
+        }
         if_any(
           tar_exist_progress(
             store = tar_config_get(
