@@ -172,8 +172,30 @@ tar_watch_ui <- function(
       collapsible = FALSE,
       solidHeader = TRUE,
       width = 9,
-      shiny::uiOutput(ns("display"))
+      # expand here 
+      shiny.router::router_ui(
+        shiny.router::route("summary",
+                            gt::gt_output(ns("summary"))),
+        shiny.router::route("branches", gt::gt_output(ns("branches"))),
+        shiny.router::route("progress", DT::dataTableOutput(ns("progress"))),
+        shiny.router::route("graph", visNetwork::visNetworkOutput(
+                ns("graph"),
+                height = height
+              )),
+        shiny.router::route("about", tar_watch_about())
+      )
+     # shiny::uiOutput(ns("display"))
     )
   )
 }
 # nocov end
+
+tar_watch_about <- function() {
+  path <- system.file(
+    file.path("tar_watch", "about.md"),
+    package = "targets",
+    mustWork = TRUE
+  )
+  # to contain it inside a shinytag or else it spills over
+  shiny::fluidRow(shiny::includeMarkdown(path))
+}

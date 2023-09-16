@@ -50,19 +50,28 @@ tar_watch_server <- function(
           refresh$refresh <- tempfile()
         }
       })
-      output$display <- shiny::renderUI({
-        switch(
-          input$display %|||% "summary",
-          graph = visNetwork::visNetworkOutput(
-            session$ns("graph"),
-            height = height
-          ),
-          summary = gt::gt_output(session$ns("summary")),
-          branches = gt::gt_output(session$ns("branches")),
-          progress = DT::dataTableOutput(session$ns("progress")),
-          about = tar_watch_about()
-        )
+      # expand into shiny modules brought in
+      shiny.router::router_server("summary") #default 2 summary view
+      
+      #add functionality to change website based on input display
+      shiny::observeEvent(input$display, {
+        shiny.router::change_page(input$display)
       })
+      
+      # output$display <- shiny::renderUI({
+      #   switch(
+      #     input$display %|||% "summary",
+      #     graph = visNetwork::visNetworkOutput(
+      #       session$ns("graph"),
+      #       height = height
+      #     ),
+      #     summary = gt::gt_output(session$ns("summary")),
+      #     branches = gt::gt_output(session$ns("branches")),
+      #     progress = DT::dataTableOutput(session$ns("progress")),
+      #     about = tar_watch_about()
+      #   )
+      # })
+      
       output$summary <- gt::render_gt({
         shiny::req(refresh$refresh)
         if_any(
@@ -170,12 +179,5 @@ tar_watch_server <- function(
   )
 }
 
-tar_watch_about <- function() {
-  path <- system.file(
-    file.path("tar_watch", "about.md"),
-    package = "targets",
-    mustWork = TRUE
-  )
-  shiny::includeMarkdown(path)
-}
+
 # nocov end
