@@ -164,20 +164,15 @@ tar_watch_ui <- function(
         step = 1
       )
     ),
-    bs4Dash::bs4Card(
+    shiny::column(
       inputID = ns("output"),
-      title = "Output",
-      status = "primary",
-      closable = FALSE,
-      collapsible = FALSE,
-      solidHeader = TRUE,
       width = 9,
       # expand here 
       shiny.router::router_ui(
         shiny.router::route("summary",
                             bs4Dash::bs4Card(
                               title = "Summary View",
-                              status = "secondary",
+                              status = "primary",
                               closable = FALSE,
                               collapsible = FALSE,
                               solidHeader = TRUE,
@@ -186,7 +181,7 @@ tar_watch_ui <- function(
         shiny.router::route("branches",
                             bs4Dash::bs4Card(
                               title = "Branches View",
-                              status = "secondary",
+                              status = "primary",
                               closable = FALSE,
                               collapsible = FALSE,
                               solidHeader = TRUE,
@@ -195,7 +190,7 @@ tar_watch_ui <- function(
         shiny.router::route("progress",
                             bs4Dash::bs4Card(
                               title = "Progress View",
-                              status = "secondary",
+                              status = "primary",
                               closable = FALSE,
                               collapsible = FALSE,
                               solidHeader = TRUE,
@@ -204,7 +199,7 @@ tar_watch_ui <- function(
         shiny.router::route("graph",
                             bs4Dash::bs4Card(
                               title = "Graph View",
-                              status = "secondary",
+                              status = "primary",
                               closable = FALSE,
                               collapsible = FALSE,
                               solidHeader = TRUE,
@@ -216,7 +211,7 @@ tar_watch_ui <- function(
         shiny.router::route("about",
                             bs4Dash::bs4Card(
                               title = "About the Tar Watch App",
-                              status = "secondary",
+                              status = "primary",
                               closable = FALSE,
                               collapsible = FALSE,
                               solidHeader = TRUE,
@@ -236,5 +231,5 @@ tar_watch_about <- function() {
     mustWork = TRUE
   )
   # to contain it inside a shinytag or else it spills over
-  shiny::fluidRow(shiny::includeMarkdown(path))
+  shiny::includeMarkdown(path)
 }
