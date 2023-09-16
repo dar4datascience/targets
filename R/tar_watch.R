@@ -61,7 +61,7 @@ tar_watch <- function(
   project = Sys.getenv("TAR_PROJECT", "main"),
   height = "650px",
   display = "summary",
-  displays = c("summary", "branches", "progress", "graph", "about"),
+  displays = tar_display_controllers(),
   background = TRUE,
   browse = TRUE,
   host = getOption("shiny.host", "127.0.0.1"),
@@ -242,3 +242,23 @@ tar_watch_app_ui <- function(
   )
 }
 # nocov end
+
+#docs
+# this doesnt stop view from being created
+# remove branches option if not relevant to pipeline
+tar_display_controllers <- function(config = Sys.getenv("TAR_CONFIG", "_targets.yaml"),
+                                      project = Sys.getenv("TAR_PROJECT", "main")){
+  
+  if(nrow(tar_progress_branches(            store = tar_config_get(
+    "store",
+    config = config,
+    project = project
+  )
+  )) > 0){
+    display_options <- c("summary", "branches", "progress", "graph", "about")
+  }else{
+    display_options <- c("summary", "progress", "graph", "about")
+  }
+  
+  return(display_options)
+}
