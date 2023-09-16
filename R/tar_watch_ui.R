@@ -165,6 +165,7 @@ tar_watch_ui <- function(
       )
     ),
     bs4Dash::bs4Card(
+      maximizable = TRUE,
       inputID = ns("output"),
       title = "Output",
       status = "primary",
